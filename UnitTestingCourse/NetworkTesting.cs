@@ -15,5 +15,15 @@ namespace UnitTestingCourse
             return "Success: ping send";
         }
 
+        public int TestTimeout (int a, int b)
+        {
+            return a + b;
+        }
+
+        public DateTime LastLogonDateAttempt()
+        {
+            return DateTime.Now;
+        }
+
     }
 }
