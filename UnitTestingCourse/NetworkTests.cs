@@ -1,29 +1,35 @@
 using System.Globalization;
+using FakeItEasy;
 using FluentAssertions;
+using UnitTestingCourse.DNS;
 using Xunit;
 
 namespace UnitTestingCourse
 {
-    public class UnitTest1
+    public class NetworkTests
     {
         readonly NetworkTesting _networkTester;
-        public UnitTest1()
+        readonly IDns _dns;
+        public NetworkTests()
         {
+            //Dependency injection example with fakeiteasy
+            _dns = A.Fake<IDns>();
+
             //SUT System under test
-            _networkTester = new NetworkTesting();
+            _networkTester = new NetworkTesting(_dns);
         }
 
         [Fact]
         public void NetworkTesting_SendPing_ReturnString()
         {
             //Arrange
-
+            A.CallTo(() => _dns.SendDns()).Returns (true) ;
             //Act
             var result = _networkTester.SendPing();
             //Assert
 
             result.Should().NotBeNullOrEmpty();
-            result.Should().Be("Success: ping send");
+            result.Should().Be("Success: ping sent");
         }
 
 
